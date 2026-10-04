@@ -1,8 +1,8 @@
 -- Lucia Noria
 -- 370992
 
--- NOMBRE ESTUDIANTE  2
--- NRO ESTUDIANTE 2
+-- Nahuel Ramírez
+-- 335448
 
 {-#LANGUAGE GADTs #-}
 {-# OPTIONS_GHC -fno-warn-tabs #-}
@@ -29,13 +29,37 @@ instance Eq Racional where
 
 
 instance Ord Signo where
-    (<=) = undefined
+    Neg <= Pos = True
+    Neg <= Neg = True
+    Pos <= Pos = True
+    Pos <= Neg = False
 
 instance Ord Racional where
-    
-    
+    (Q Pos (n1,d1)) <= (Q Pos (n2,d2)) = n1*d2 <= n2*d1
+    (Q Neg (n1,d1)) <= (Q Neg (n2,d2)) = n2*d1 <= n1*d2
+    (Q Neg (n1,d1)) <= (Q Pos (n2,d2)) = True
+    (Q Pos (n1,d1)) <= (Q Neg (n2,d2)) = False
 
 instance Num Racional where
     (+) = undefined
-    (*) = undefined 
-    
+
+    (Q Pos (n1,d1)) * (Q Pos (n2,d2)) = Q Pos (n1*n2,d1*d2)
+    (Q Neg (n1,d1)) * (Q Neg (n2,d2)) = Q Pos (n1*n2,d1*d2)
+    (Q Pos (n1,d1)) * (Q Neg (n2,d2)) = Q Neg (n1*n2,d1*d2)
+    (Q Neg (n1,d1)) * (Q Pos (n2,d2)) = Q Neg (n1*n2,d1*d2)
+
+    (Q Pos (n1,d1)) - (Q Neg (n2,d2)) =
+        Q Pos (n1*d2 + n2*d1,d1*d2)
+
+    (Q Neg (n1,d1)) - (Q Pos (n2,d2)) =
+        Q Neg (n1*d2 + n2*d1,d1*d2)
+
+    (Q Pos (n1,d1)) - (Q Pos (n2,d2)) =
+        if n2*d1 <= n1*d2
+        then Q Pos (n1*d2 - n2*d1,d1*d2)
+        else Q Neg (n2*d1 - n1*d2,d1*d2)
+
+    (Q Neg (n1,d1)) - (Q Neg (n2,d2)) =
+        if n1*d2 <= n2*d1
+        then Q Pos (n2*d1 - n1*d2,d1*d2)
+        else Q Neg (n1*d2 - n2*d1,d1*d2)
