@@ -24,9 +24,6 @@ cuatro = S tres
 cinco :: N
 cinco = S cuatro
 
-seis :: N
-seis = S cinco
-
 instance Eq N where
     (==) = \a -> \b -> case a of {
         O -> case b of {

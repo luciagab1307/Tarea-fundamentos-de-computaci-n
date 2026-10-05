@@ -24,9 +24,8 @@ instance Eq Signo where
 instance Eq Racional where
     (Q Pos (n1,d1)) == (Q Pos (n2,d2)) = (n1 * d2 == n2 * d1)
     (Q Neg (n1,d1)) == (Q Neg (n2,d2)) = (n1 * d2 == n2 * d1)
-    (Q Pos (n1,d1)) == (Q Neg (n2,d2)) = False
-    (Q Neg (n1,d1)) == (Q Pos (n2,d2)) = False
-
+    (Q Pos (n1,d1)) == (Q Neg (n2,d2)) = n1 == O && n2 == O
+    (Q Neg (n1,d1)) == (Q Pos (n2,d2)) = n1 == O && n2 == O
 
 instance Ord Signo where
     Neg <= Pos = True
@@ -38,7 +37,7 @@ instance Ord Racional where
     (Q Pos (n1,d1)) <= (Q Pos (n2,d2)) = n1*d2 <= n2*d1
     (Q Neg (n1,d1)) <= (Q Neg (n2,d2)) = n2*d1 <= n1*d2
     (Q Neg (n1,d1)) <= (Q Pos (n2,d2)) = True
-    (Q Pos (n1,d1)) <= (Q Neg (n2,d2)) = False
+    (Q Pos (n1,d1)) <= (Q Neg (n2,d2)) = n1 == O && n2 == O
 
 instance Num Racional where
 
