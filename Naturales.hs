@@ -1,3 +1,9 @@
+-- Lucia Noria
+-- 370992
+
+-- Nahuel Ramírez
+-- 335448
+
 {-#LANGUAGE GADTs #-}
 {-# OPTIONS_GHC -fno-warn-tabs #-}
 {-# OPTIONS_GHC -fno-warn-missing-methods #-}
