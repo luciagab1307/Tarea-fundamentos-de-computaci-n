@@ -41,8 +41,19 @@ instance Ord Racional where
     (Q Pos (n1,d1)) <= (Q Neg (n2,d2)) = False
 
 instance Num Racional where
-    (+) = undefined
 
+    (+) (Q Pos (n1,d1)) (Q Pos (n2,d2)) = Q Pos (n1*d2 + n2*d1,d1*d2)
+    (+) (Q Neg (n1,d1)) (Q Neg (n2,d2)) = Q Neg (n1*d2 + n2*d1,d1*d2)
+    (+) (Q Pos (n1,d1)) (Q Neg (n2,d2)) =
+        if n1*d2 >= n2*d1
+        then Q Pos (n1*d2 - n2*d1,d1*d2)
+        else Q Neg (n2*d1 - n1*d2,d1*d2)
+
+    (+) (Q Neg (n1,d1)) (Q Pos (n2,d2)) =
+        if n2*d1 >= n1*d2
+        then Q Pos (n2*d1 - n1*d2,d1*d2)
+        else Q Neg (n1*d2 - n2*d1,d1*d2)
+   
     (Q Pos (n1,d1)) * (Q Pos (n2,d2)) = Q Pos (n1*n2,d1*d2)
     (Q Neg (n1,d1)) * (Q Neg (n2,d2)) = Q Pos (n1*n2,d1*d2)
     (Q Pos (n1,d1)) * (Q Neg (n2,d2)) = Q Neg (n1*n2,d1*d2)
